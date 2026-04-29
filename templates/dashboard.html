@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- MENSAJE -->
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</h5>
+
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="input-group mt-3">
+                    <input type="text" name="mensaje" class="form-control">
+                    <button class="btn btn-success">Enviar</button>
+                </div>
+            </form>
+
+            {% if mensaje_usuario %}
+            <div class="alert alert-info mt-3">{{ mensaje_usuario }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ARCHIVO -->
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5><i class="fa-solid fa-upload"></i> Subir archivo</h5>
+
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="input-group mt-3">
+                    <input type="file" name="archivo" class="form-control" multiple>
+                    <button class="btn btn-primary">Subir</button>
+                </div>
+            </form>
+
+            {% if mensaje_archivo %}
+            <div class="alert alert-info mt-3">{{ mensaje_archivo }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

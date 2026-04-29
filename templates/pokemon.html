@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Pokédex{% endblock %}
+
+{% block content %}
+
+<div style="max-width:500px; margin:auto;">
+
+    <h3 class="text-center mb-4">Pokédex</h3>
+
+    <form method="POST" class="mb-4">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="input-group">
+            <input type="text" name="nombre" class="form-control" placeholder="Ej: pikachu">
+
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <button class="btn btn-warning" name="random" value="1">
+                <i class="fa-solid fa-dice"></i>
+            </button>
+        </div>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger text-center">{{ error }}</div>
+    {% endif %}
+
+    {% if data %}
+    <div class="card p-4 text-center">
+
+        <h4 class="text-capitalize">{{ data.nombre }}</h4>
+
+        <img src="{{ data.imagen }}" class="d-block mx-auto my-3" style="width:120px;">
+
+        <p><strong>Altura:</strong> {{ data.altura }}</p>
+        <p><strong>Peso:</strong> {{ data.peso }}</p>
+
+        <div class="mb-3">
+            {% for tipo in data.tipos %}
+            <span class="badge bg-primary">{{ tipo }}</span>
+            {% endfor %}
+        </div>
+
+        <h5>Stats</h5>
+
+        {% for stat, valor in data.stats.items() %}
+        <div class="mb-2 text-start">
+
+            <div class="d-flex justify-content-between">
+                <small>{{ stat }}</small>
+                <strong>{{ valor }}</strong>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" style="width: {{ valor / 2 }}%"></div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

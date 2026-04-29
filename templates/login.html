@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+
+            <div class="login-header">
+                <div class="company-logo">
+                    <div class="logo-icon">🏢</div>
+                </div>
+                <h2>Bienvenido</h2>
+                <p>Inicia sesión en tu cuenta</p>
+            </div>
+
+            <!-- FORMULARIO REAL -->
+            <form class="login-form" id="loginForm" method="POST" action="{{ url_for('login') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <!-- USUARIO -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="text" id="email" name="usuario" required placeholder=" " />
+                        <label>Usuario</label>
+                        <span class="input-border"></span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <!-- CONTRASEÑA -->
+                <div class="form-group">
+                    <div class="input-wrapper password-wrapper">
+                        <input type="password" id="password" name="clave" required placeholder=" " />
+                        <label>Contraseña</label>
+
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            <span class="toggle-icon"></span>
+                        </button>
+
+                        <span class="input-border"></span>
+                    </div>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <!-- OPCIONES -->
+                <div class="form-options">
+                    <div class="remember-wrapper">
+                        <input type="checkbox" id="remember" name="remember" />
+                        <label for="remember" class="checkbox-label">
+                            <span class="checkbox-custom"></span>
+                            Mantener sesión
+                        </label>
+                    </div>
+
+                    <a href="{{ url_for('olvide_contrasena') }}" class="forgot-password">
+                        Olvidé mi contraseña
+                    </a>
+                </div>
+
+                <!-- BOTÓN -->
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Ingresar</span>
+                    <span class="btn-loader"></span>
+                </button>
+
+            </form>
+
+            <!-- MENSAJE DE FLASK -->
+            {% if mensaje %}
+            <div class="error-message show" style="margin-bottom:15px;">
+                {{ mensaje }}
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

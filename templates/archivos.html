@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Archivos{% endblock %}
+
+{% block content %}
+
+<div style="max-width:900px; margin:auto;">
+
+    <h3 class="text-center mb-4">📂 Archivos</h3>
+
+    {% for archivo in archivos %}
+    <div class="card p-3 mb-3">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+                <strong>{{ archivo.nombre }}</strong>
+                <div style="font-size:14px; color:gray;">
+                    {{ archivo.tamano }} KB • {{ archivo.fecha }}
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <a href="/ver/{{ archivo.nombre }}" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+
+                <a href="/descargar/{{ archivo.nombre }}" class="btn btn-success btn-sm">
+                    <i class="fa-solid fa-download"></i>
+                </a>
+
+                {% if usuario_rol == 'admin' %}
+                <form method="POST" action="{{ url_for('eliminar_archivo', nombre=archivo.nombre) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-danger btn-sm">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
